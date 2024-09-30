@@ -1,6 +1,11 @@
 #!/bin/bash
 
-set -euxo pipefail
+set -exo pipefail
+
+# Display environment info
+echo CONDA_BUILD_CROSS_COMPILATION: $CONDA_BUILD_CROSS_COMPILATION
+echo CROSSCOMPILING_EMULATOR      : $CROSSCOMPILING_EMULATOR
+echo target_platform              : $target_platform
 
 # Set CMake options for pymomentum
 export MOMENTUM_ENABLE_SIMD=OFF
