@@ -12,7 +12,7 @@ if [[ "${target_platform}" == osx-* ]]; then
   CXXFLAGS="${CXXFLAGS} -D_LIBCPP_DISABLE_AVAILABILITY"
 fi
 
-if [[ "${CONDA_BUILD_CROSS_COMPILATION:-}" == "1" || "${target_platform}" == osx-* ]]; then
+if [[ "${CONDA_BUILD_CROSS_COMPILATION:-0}" == "1" || "${target_platform}" == osx-* ]]; then
   MOMENTUM_ENABLE_SIMD=OFF
 else
   MOMENTUM_ENABLE_SIMD=ON
@@ -24,7 +24,7 @@ if [[ "${target_platform}" == *aarch64 || "${target_platform}" == *ppc64le ]]; t
 fi
 
 # Disable use of system-installed GTest libraries when cross-compiling
-if [[ "${CONDA_BUILD_CROSS_COMPILATION:-}" != "1" || "${CROSSCOMPILING_EMULATOR:-}" != "" ]]; then
+if [[ "${CONDA_BUILD_CROSS_COMPILATION:-0}" != "1" || "${CROSSCOMPILING_EMULATOR:-}" != "" ]]; then
   MOMENTUM_USE_SYSTEM_GOOGLETEST=ON
 else
   MOMENTUM_USE_SYSTEM_GOOGLETEST=OFF
@@ -46,7 +46,7 @@ cmake $SRC_DIR \
 
 cmake --build build --parallel
 
-if [[ "${CONDA_BUILD_CROSS_COMPILATION:-}" != "1" ]]; then
+if [[ "${CONDA_BUILD_CROSS_COMPILATION:-0}" != "1" || "${CROSSCOMPILING_EMULATOR:-}" != "" ]]; then
   ctest --test-dir build --output-on-failure
 fi
 
