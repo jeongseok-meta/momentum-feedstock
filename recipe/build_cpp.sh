@@ -5,6 +5,7 @@ set -exo pipefail
 # Display environment info
 echo CONDA_BUILD_CROSS_COMPILATION: $CONDA_BUILD_CROSS_COMPILATION
 echo CROSSCOMPILING_EMULATOR      : $CROSSCOMPILING_EMULATOR
+echo build_platform               : $build_platform
 echo target_platform              : $target_platform
 
 if [[ "${target_platform}" == osx-* ]]; then
