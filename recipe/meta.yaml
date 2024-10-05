@@ -87,7 +87,6 @@ outputs:
         - {{ stdlib('c') }}
         - {{ compiler('cuda') }}    # [cuda_compiler_version != "None"]
         {% if cuda_major >= 12 %}
-        - cuda-toolkit
         - cuda-driver-dev           # [build_platform != target_platform]
         - cuda-cudart-dev           # [build_platform != target_platform]
         - cuda-nvrtc-dev            # [build_platform != target_platform]
@@ -114,7 +113,6 @@ outputs:
         - magma                                     # [cuda_compiler_version != "None"]
         - cuda-version {{ cuda_compiler_version }}  # [cuda_compiler_version != "None"]
         {% if cuda_major >= 12 %}
-        - cuda-toolkit
         - cuda-driver-dev
         - cuda-cudart-dev
         - cuda-nvrtc-dev
