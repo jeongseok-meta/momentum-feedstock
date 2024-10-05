@@ -81,7 +81,7 @@ outputs:
       string: cuda{{ cuda_compiler_version | replace('.', '') }}_py{{ CONDA_PY }}_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version != "None"]
       skip: true  # [win]
       skip: true  # [ppc64le]
-      skip: true  # [aarch64 and cuda_major >= 12]
+      skip: true  # [aarch64 and cuda_compiler_version == "12.0"]
     requirements:
       build:
         - {{ compiler('cxx') }}
@@ -173,7 +173,7 @@ outputs:
         - {{ pin_subpackage('momentum-cpp', exact=True) }}
         - {{ pin_subpackage('pymomentum', exact=True) }}  # [linux and not ppc64le]
         - {{ pin_subpackage('pymomentum', exact=True) }}  # [osx]
-        - {{ pin_subpackage('pymomentum', exact=True) }}  # [not(aarch64 and cuda_major >= 12)]
+        - {{ pin_subpackage('pymomentum', exact=True) }}  # [not(aarch64 and cuda_compiler_version == "12.0")]
         - python
         - numpy
     test:
