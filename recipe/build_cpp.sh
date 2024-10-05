@@ -13,10 +13,10 @@ if [[ "${target_platform}" == osx-* ]]; then
   CXXFLAGS="${CXXFLAGS} -D_LIBCPP_DISABLE_AVAILABILITY"
 fi
 
-if [[ "${CONDA_BUILD_CROSS_COMPILATION:-0}" == "1" || "${target_platform}" == osx-* ]]; then
-  MOMENTUM_ENABLE_SIMD=OFF
+if [[ "${CONDA_BUILD_CROSS_COMPILATION:-}" == "1" || "${target_platform}" == osx-* ]]; then
+  momentum_enable_simd=OFF
 else
-  MOMENTUM_ENABLE_SIMD=ON
+  momentum_enable_simd=ON
 fi
 
 # Workaround for fx/gltf.h:70:13: error: narrowing conversion of '-1' from 'int' to 'char' [-Wnarrowing]
@@ -24,11 +24,11 @@ if [[ "${target_platform}" == *aarch64 || "${target_platform}" == *ppc64le ]]; t
   CXXFLAGS="${CXXFLAGS} -Wno-narrowing"
 fi
 
-# Disable use of system-installed GTest libraries when cross-compiling
-if [[ "${CONDA_BUILD_CROSS_COMPILATION:-0}" != "1" ]]; then
-  MOMENTUM_USE_SYSTEM_GOOGLETEST=ON
+# Disable tests when cross-compiling
+if [[ "${CONDA_BUILD_CROSS_COMPILATION:-}" == "1" ]]; then
+  build_testing=OFF
 else
-  MOMENTUM_USE_SYSTEM_GOOGLETEST=OFF
+  build_testing=ON
 fi
 
 cmake $SRC_DIR \
@@ -39,15 +39,15 @@ cmake $SRC_DIR \
   -DCMAKE_BUILD_TYPE=Release \
   -DMOMENTUM_BUILD_EXAMPLES=OFF \
   -DMOMENTUM_BUILD_PYMOMENTUM=OFF \
-  -DMOMENTUM_BUILD_TESTING=ON \
-  -DMOMENTUM_ENABLE_SIMD=$MOMENTUM_ENABLE_SIMD \
-  -DMOMENTUM_USE_SYSTEM_GOOGLETEST=$MOMENTUM_USE_SYSTEM_GOOGLETEST \
+  -DMOMENTUM_BUILD_TESTING=$build_testing \
+  -DMOMENTUM_ENABLE_SIMD=$momentum_enable_simd \
+  -DMOMENTUM_USE_SYSTEM_GOOGLETEST=ON \
   -DMOMENTUM_USE_SYSTEM_PYBIND11=ON \
   -DMOMENTUM_USE_SYSTEM_RERUN_CPP_SDK=ON
 
 cmake --build build --parallel
 
-if [[ "${CONDA_BUILD_CROSS_COMPILATION:-0}" != "1" ]]; then
+if [[ "${CONDA_BUILD_CROSS_COMPILATION:-}" != "1" ]]; then
   ctest --test-dir build --output-on-failure
 fi
 
