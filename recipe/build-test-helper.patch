@@ -1,0 +1,16 @@
+diff --git a/setup.py b/setup.py
+index 6e2ba878..99f6591a 100644
+--- a/setup.py
++++ b/setup.py
+@@ -130,9 +130,9 @@ def main():
+         ext_modules=[
+             CMakeExtension("geometry", sourcedir=ROOT_DIR),
+             CMakeExtension("quaternion", sourcedir=ROOT_DIR),
+-            CMakeExtension("geometry_test_helper", sourcedir=ROOT_DIR),
+             CMakeExtension("skel_state", sourcedir=ROOT_DIR),
+-        ],
++        ] + [CMakeExtension("geometry_test_helper", sourcedir=ROOT_DIR),] if os.environ.get('MOMENTUM_BUILD_TESTING', 'ON') == 'ON'
++        else [],
+         cmdclass={
+             "build_ext": CMakeBuild,
+         },

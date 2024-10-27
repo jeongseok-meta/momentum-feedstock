@@ -14,6 +14,8 @@ package:
 source:
   - url: https://github.com/facebookincubator/momentum/archive/v{{ version }}.tar.gz
     sha256: dc201f1ecd675a21b81d51c46b7717f60b07a3d4eac0cde729791dda0cdebd20
+    patches:
+      - build-test-helper.patch
 
 build:
   number: 1

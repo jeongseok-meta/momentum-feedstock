@@ -9,6 +9,9 @@ echo build_platform               : $build_platform
 echo target_platform              : $target_platform
 
 # Set CMake options for pymomentum
+if [[ "${target_platform}" == *aarch64 || "${target_platform}" == *ppc64le ]]; then
+  export MOMENTUM_BUILD_TESTING=OFF
+fi
 export MOMENTUM_ENABLE_SIMD=OFF
 
 # Workaround for fx/gltf.h:70:13: error: narrowing conversion of '-1' from 'int' to 'char' [-Wnarrowing]
