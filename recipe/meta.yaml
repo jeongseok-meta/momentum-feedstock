@@ -60,14 +60,12 @@ outputs:
         - ms-gsl
         - nlohmann_json
         - openfbx
-        - python  # [linux]
         - re2
         - spdlog
       run:
         - dispenso
         - gflags
         - libdeflate
-        - python  # [linux]
     test:
       commands:
         - test -f $PREFIX/lib/cmake/momentum/momentum-config.cmake  # [not win]
