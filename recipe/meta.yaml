@@ -157,6 +157,11 @@ outputs:
         - numpy
         - python
         - pytorch
+      run_constrained:
+        - pymomentum-cpu =={{ version }}  # [cuda_compiler_version == "None"]
+        - pymomentum-gpu ==99999999       # [cuda_compiler_version == "None"]
+        - pymomentum-gpu =={{ version }}  # [cuda_compiler_version != "None"]
+        - pymomentum-cpu ==99999999       # [cuda_compiler_version != "None"]
     test:
       imports:
         - pymomentum.geometry
