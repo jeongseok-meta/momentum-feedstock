@@ -20,14 +20,14 @@ build:
   skip: true  # [py<310]
 
 outputs:
-  - name: momentum-cpp
+  - name: momentum
     script: build_cpp.sh  # [unix]
     script: bld_cpp.bat  # [win]
     build:
       skip:
         - true  # [cuda_compiler_version != "None"]
       run_exports:
-        - {{ pin_subpackage('momentum-cpp', max_pin='x.x') }}
+        - {{ pin_subpackage('momentum', max_pin='x.x') }}
       ignore_run_exports:
         - ceres-solver
         - drjit-cpp
@@ -170,7 +170,8 @@ outputs:
       string: cpu_py{{ CONDA_PY }}_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}                                                 # [cuda_compiler_version == "None"]
       string: cuda{{ cuda_compiler_version | replace('.', '') }}_py{{ CONDA_PY }}_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version != "None"]
       detect_binary_files_with_prefix: false
-      skip: true                                                                                                      # [cuda_compiler_version != "None"]
+      skip: true  # [win]
+      skip: true  # [linux and not x86_64]
       # weigh down cpu implementation and give cuda preference
       track_features:
         - pymomentum-cpu                                                                                              # [cuda_compiler_version == "None"]
@@ -182,22 +183,6 @@ outputs:
         - pymomentum.geometry
         - pymomentum.quaternion
         - pymomentum.skel_state
-
-  - name: momentum
-    build:
-      run_exports:
-        - {{ pin_subpackage('momentum-cpp', max_pin='x.x') }}
-    requirements:
-      run:
-        - {{ pin_subpackage('momentum-cpp', exact=True) }}
-        - {{ pin_subpackage('pymomentum', exact=True) }}  # [linux and x86_64]
-        - {{ pin_subpackage('pymomentum', exact=True) }}  # [osx]
-        - python
-        - numpy
-    test:
-      commands:
-        - test -f $PREFIX/lib/cmake/momentum/momentum-config.cmake  # [not win]
-        - if not exist %PREFIX%\\Library\\lib\\cmake\\momentum\\momentum-config.cmake exit 1  # [win]
 
 about:
   home: https://facebookincubator.github.io/momentum/
