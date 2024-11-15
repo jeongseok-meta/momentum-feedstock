@@ -69,6 +69,15 @@ outputs:
         - openfbx
         - re2
     test:
+      script: run_test_cpp.sh   # [unix]
+      script: run_test_cpp.bat  # [win]
+      requires:
+        - cmake
+        - {{ compiler("c") }}
+        - {{ compiler("cxx") }}
+        - ninja  # [unix]
+      files:
+        - tests/
       commands:
         - test -f $PREFIX/lib/cmake/momentum/momentum-config.cmake  # [not win]
         - if not exist %PREFIX%\\Library\\lib\\cmake\\momentum\\momentum-config.cmake exit 1  # [win]
