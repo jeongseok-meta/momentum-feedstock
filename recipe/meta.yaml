@@ -116,14 +116,14 @@ outputs:
         - libcusparse-dev           # [build_platform != target_platform]
         {% endif %}
         - cmake
+        - cross-python_{{ target_platform }}     # [build_platform != target_platform]
         - gtest
         - libboost-devel
         - ninja  # [not win]
         - pip
         - pybind11
         - python
-        - cross-python_{{ target_platform }}     # [build_platform != target_platform]
-        - setuptools
+        - scikit-build-core
       host:
         # GPU requirements
         {% if cuda_compiler_version != "None" %}
@@ -159,7 +159,7 @@ outputs:
         - openfbx
         - python  # [linux]
         - re2
-        - setuptools
+        - scikit-build-core
         - spdlog
         - pip
         - python
