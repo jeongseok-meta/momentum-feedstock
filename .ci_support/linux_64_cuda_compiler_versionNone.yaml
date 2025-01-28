@@ -13,9 +13,9 @@ channel_sources:
 channel_targets:
 - conda-forge main
 cuda_compiler:
-- cuda-nvcc
+- None
 cuda_compiler_version:
-- '12.6'
+- None
 cudnn:
 - '9'
 cxx_compiler:
@@ -49,9 +49,9 @@ pytorch:
 re2:
 - 2024.07.02
 spdlog:
-- '1.14'
+- '1.15'
 target_platform:
-- linux-aarch64
+- linux-64
 zip_keys:
 - - c_compiler_version
   - cxx_compiler_version

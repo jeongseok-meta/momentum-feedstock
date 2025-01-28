@@ -18,6 +18,10 @@ if [[ "${target_platform}" == *aarch64 || "${target_platform}" == *ppc64le ]]; t
   CXXFLAGS="${CXXFLAGS} -Wno-narrowing"
 fi
 
+if [[ "${target_platform}" == *ppc64le ]]; then
+  CXXFLAGS="${CXXFLAGS} -DNO_WARN_X86_INTRINSICS"
+fi
+
 # Disable use of system-installed GTest libraries when cross-compiling
 if [[ "${CONDA_BUILD_CROSS_COMPILATION:-}" != "1" ]]; then
   MOMENTUM_USE_SYSTEM_GOOGLETEST=ON
