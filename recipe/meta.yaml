@@ -1,7 +1,7 @@
 {% set pymomentum_cpu_gpu = "pymomentum-gpu" %}  # [cuda_compiler_version != "None"]
 {% set pymomentum_cpu_gpu = "pymomentum-cpu" %}  # [cuda_compiler_version == "None"]
 {% set name = "momentum" %}
-{% set version = "0.1.26" %}
+{% set version = "0.1.27" %}
 
 package:
   name: {{ name|lower }}
@@ -9,13 +9,13 @@ package:
 
 source:
   - url: https://github.com/facebookincubator/momentum/archive/v{{ version }}.tar.gz
-    sha256: a447f4d6958be3078bb15110f1dcfb34355c06c9e9a80167a1e18e287cd07eb8
+    sha256: 60d0c65651f1f6515fe9b9b179d77b2c22a523dab3eb1a05b8f52aba9886cbbf
     patches:
       - 002-remove-pyproject-toml.patch
       - 003-add-setup-py.patch
 
 build:
-  number: 1
+  number: 0
   skip: true  # [py<310]
   # cuda 11.8 was dropped due to maintenance effort
   skip: true  # [cuda_compiler_version == "11.8"]
