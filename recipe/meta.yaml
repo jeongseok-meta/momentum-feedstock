@@ -1,7 +1,7 @@
 {% set pymomentum_cpu_gpu = "pymomentum-gpu" %}  # [cuda_compiler_version != "None"]
 {% set pymomentum_cpu_gpu = "pymomentum-cpu" %}  # [cuda_compiler_version == "None"]
 {% set name = "momentum" %}
-{% set version = "0.1.41" %}
+{% set version = "0.1.42" %}
 
 package:
   name: {{ name|lower }}
@@ -9,12 +9,12 @@ package:
 
 source:
   - url: https://github.com/facebookresearch/momentum/archive/v{{ version }}.tar.gz
-    sha256: 44262ce20c9369c84f58351701ddf3e250e7cd0744ece2ec39d8185fa57b2076
+    sha256: 22f92c37610399ff2b65cda03b7f83a680d36b41a05e462f1dc501f70c061b2b
     patches:
       - patches/0001-Use-Python3-Module-instead-of-Python3_LIBRARIES.patch
 
 build:
-  number: 1
+  number: 0
   skip: true  # [py<310]
   # cuda 11.8 was dropped due to maintenance effort
   skip: true  # [cuda_compiler_version == "11.8"]
