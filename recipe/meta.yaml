@@ -14,7 +14,7 @@ source:
       - patches/0001-Use-Python3-Module-instead-of-Python3_LIBRARIES.patch
 
 build:
-  number: 0
+  number: 1
   skip: true  # [py<310]
   # cuda 11.8 was dropped due to maintenance effort
   skip: true  # [cuda_compiler_version == "11.8"]
@@ -90,7 +90,15 @@ outputs:
       commands:
         - test -f $PREFIX/lib/cmake/momentum/momentum-config.cmake  # [not win]
         - if not exist %PREFIX%\\Library\\lib\\cmake\\momentum\\momentum-config.cmake exit 1  # [win]
+        - animate_shapes --help
+        - c3d_viewer --help
+        - convert_model --help
+        - fbx_viewer --help
         - glb_viewer --help
+        - hello_world
+        - process_markers_app --help
+        - refine_motion --help
+        - urdf_viewer --help
 
   - name: pymomentum
     script: build_py.sh  # [unix]

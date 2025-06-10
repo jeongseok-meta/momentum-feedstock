@@ -19,9 +19,6 @@ libboost_devel:
 libtorch:
 - '2.7'
 numpy:
-- '2.0'
-- '2.0'
-- '2.0'
 - '2'
 pin_run_as_build:
   python:
@@ -47,7 +44,5 @@ urdfdom:
 zip_keys:
 - - cuda_compiler
   - cuda_compiler_version
-- - python
-  - numpy
 zlib:
 - '1'
