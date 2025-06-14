@@ -7,7 +7,7 @@ channel_sources:
 channel_targets:
 - conda-forge main
 cuda_compiler:
-- None
+- cuda-nvcc
 cuda_compiler_version:
 - None
 cxx_compiler:
@@ -41,8 +41,5 @@ target_platform:
 - win-64
 urdfdom:
 - '4.0'
-zip_keys:
-- - cuda_compiler
-  - cuda_compiler_version
 zlib:
 - '1'
