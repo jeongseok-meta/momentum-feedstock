@@ -27,7 +27,7 @@ index ddc6451f..b7142d0e 100644
 -    LINK_LIBRARIES tensor_utility
 +    LINK_LIBRARIES
 +      tensor_utility
-+      Python3::Module
++      Python3::Python
    )
 
    mt_test(
