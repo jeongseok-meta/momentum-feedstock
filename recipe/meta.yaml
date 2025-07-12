@@ -178,6 +178,12 @@ outputs:
         - pymomentum.quaternion
         - pymomentum.skel_state
         - pymomentum.solver
+        - pymomentum.solver2
+      commands:
+        - pip list
+        - pip check
+      requires:
+        - pip
 
   {% set pymomentum_cpu_gpu = "pymomentum-cpu" %}   # [cuda_compiler_version == "None"]
   {% set pymomentum_cpu_gpu = "pymomentum-gpu" %}   # [cuda_compiler_version != "None"]
