@@ -1,14 +1,14 @@
-From 5cc06970540709b02a6ea3d32599f0cb65d11c69 Mon Sep 17 00:00:00 2001
+From c3cde912e1a466e08436926af2601bb6c09fbb98 Mon Sep 17 00:00:00 2001
 From: Jeongseok Lee <jeongseok@meta.com>
-Date: Wed, 26 Mar 2025 20:47:20 -0700
-Subject: [PATCH] Use Python3::Module instead of Python3_LIBRARIES
+Date: Sat, 12 Jul 2025 12:38:54 -0700
+Subject: [PATCH] Use python3 module instead of Python3_LIBRARIES
 
 ---
- pymomentum/CMakeLists.txt | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ pymomentum/CMakeLists.txt | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
 diff --git a/pymomentum/CMakeLists.txt b/pymomentum/CMakeLists.txt
-index cfe32dfa..ffc0a16d 100644
+index ddc6451f..b7142d0e 100644
 --- a/pymomentum/CMakeLists.txt
 +++ b/pymomentum/CMakeLists.txt
 @@ -73,7 +73,7 @@ mt_library(
@@ -20,7 +20,18 @@ index cfe32dfa..ffc0a16d 100644
      ${TORCH_LIBRARIES}
    PRIVATE_LINK_LIBRARIES
      momentum
-@@ -236,7 +236,7 @@ if(MOMENTUM_BUILD_TESTING)
+@@ -247,7 +247,9 @@ if(MOMENTUM_BUILD_TESTING)
+   mt_test(
+     NAME tensor_utility_test
+     PYMOMENTUM_SOURCES_VARS tensor_utility_test_sources
+-    LINK_LIBRARIES tensor_utility
++    LINK_LIBRARIES
++      tensor_utility
++      Python3::Module
+   )
+
+   mt_test(
+@@ -257,7 +259,7 @@ if(MOMENTUM_BUILD_TESTING)
        character_test_helpers
        tensor_ik
        tensor_utility
@@ -28,7 +39,6 @@ index cfe32dfa..ffc0a16d 100644
 +      Python3::Module
    )
  endif()
- 
--- 
-2.39.5 (Apple Git-154)
 
+--
+2.49.0.windows.1
