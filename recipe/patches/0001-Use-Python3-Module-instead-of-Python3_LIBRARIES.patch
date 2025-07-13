@@ -36,7 +36,7 @@ index ddc6451f..b7142d0e 100644
        tensor_ik
        tensor_utility
 -      ${python_deps}
-+      Python3::Module
++      Python3::Python
    )
  endif()
 
