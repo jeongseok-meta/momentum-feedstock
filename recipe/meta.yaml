@@ -10,8 +10,6 @@ package:
 source:
   - url: https://github.com/facebookresearch/momentum/archive/v{{ version }}.tar.gz
     sha256: d13b48139c0d59fe1a273e83f98caa3d7ac6de8e0441af073b1cd9c4e22433b1
-    patches:
-      - patches/0001-Use-Python3-Module-instead-of-Python3_LIBRARIES.patch
 
 build:
   number: 0
