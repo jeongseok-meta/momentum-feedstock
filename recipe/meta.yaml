@@ -57,7 +57,8 @@ outputs:
         - ms-gsl
         - nlohmann_json
         - openfbx
-        - re2
+        # TODO: Remove verson constraint when upgrading rerun_version to >0.22
+        - re2 <2025
         - spdlog
         - urdfdom
       run:
@@ -74,7 +75,8 @@ outputs:
         - ms-gsl
         - nlohmann_json
         - openfbx
-        - re2
+        # TODO: Remove verson constraint when upgrading rerun_version to >0.22
+        - re2 <2025
     test:
       script: run_test_cpp.sh  # [unix]
       script: run_test_cpp.bat  # [win]
