@@ -33,3 +33,7 @@ fortran_compiler_version:      # [linux]
 
 rerun_version:
   - '0.22'
+
+# TODO: Remove when upgrading rerun_version to >0.22
+re2_version:
+  - '2024.07.02'

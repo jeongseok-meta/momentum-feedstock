@@ -2,7 +2,7 @@
 
 cmake tests ^
   -B tests/build ^
-  -DBUILD_SHARED_LIBS=OFF ^
+  -DBUILD_SHARED_LIBS=ON ^
   -DCMAKE_INSTALL_PREFIX=%LIBRARY_PREFIX% ^
   -DCMAKE_PREFIX_PATH=%LIBRARY_PREFIX%
 if errorlevel 1 exit 1
