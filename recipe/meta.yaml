@@ -154,7 +154,8 @@ outputs:
         - pip
         - python
         - pytorch
-        - re2
+        # TODO: Remove verson constraint when upgrading rerun_version to >0.22
+        - re2 <2025
         - scikit-build-core
         - spdlog
         - urdfdom
@@ -169,7 +170,8 @@ outputs:
         - pytorch
         - numpy
         - python
-        - re2
+        # TODO: Remove verson constraint when upgrading rerun_version to >0.22
+        - re2 <2025
         - spdlog
     test:
       imports:
