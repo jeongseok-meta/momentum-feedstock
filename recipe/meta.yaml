@@ -12,10 +12,8 @@ source:
     sha256: 70c5edd6992a1bbaa7654995b95d83943bedf5d66303c3963e10a4691f290b90
 
 build:
-  number: 0
-  skip: true  # [py<310]
-  # cuda 11.8 was dropped due to maintenance effort
-  skip: true  # [cuda_compiler_version == "11.8"]
+  number: 1
+  skip: true  # [py<312]
 
 outputs:
   - name: momentum-cpp
