@@ -1,7 +1,7 @@
 {% set pymomentum_cpu_gpu = "pymomentum-gpu" %}  # [cuda_compiler_version != "None"]
 {% set pymomentum_cpu_gpu = "pymomentum-cpu" %}  # [cuda_compiler_version == "None"]
 {% set name = "momentum" %}
-{% set version = "0.1.51" %}
+{% set version = "0.1.60" %}
 
 package:
   name: {{ name|lower }}
@@ -9,13 +9,11 @@ package:
 
 source:
   - url: https://github.com/facebookresearch/momentum/archive/v{{ version }}.tar.gz
-    sha256: d13b48139c0d59fe1a273e83f98caa3d7ac6de8e0441af073b1cd9c4e22433b1
+    sha256: 70c5edd6992a1bbaa7654995b95d83943bedf5d66303c3963e10a4691f290b90
 
 build:
-  number: 0
-  skip: true  # [py<310]
-  # cuda 11.8 was dropped due to maintenance effort
-  skip: true  # [cuda_compiler_version == "11.8"]
+  number: 1
+  skip: true  # [py<312]
 
 outputs:
   - name: momentum-cpp
@@ -57,7 +55,8 @@ outputs:
         - ms-gsl
         - nlohmann_json
         - openfbx
-        - re2
+        # TODO: Remove verson constraint when upgrading rerun_version to >0.22
+        - re2 {{ re2_version }}
         - spdlog
         - urdfdom
       run:
@@ -74,7 +73,8 @@ outputs:
         - ms-gsl
         - nlohmann_json
         - openfbx
-        - re2
+        # TODO: Remove verson constraint when upgrading rerun_version to >0.22
+        - re2 {{ re2_version }}
     test:
       script: run_test_cpp.sh  # [unix]
       script: run_test_cpp.bat  # [win]
@@ -150,7 +150,8 @@ outputs:
         - pip
         - python
         - pytorch
-        - re2
+        # TODO: Remove verson constraint when upgrading rerun_version to >0.22
+        - re2 {{ re2_version }}
         - scikit-build-core
         - spdlog
         - urdfdom
@@ -165,7 +166,8 @@ outputs:
         - pytorch
         - numpy
         - python
-        - re2
+        # TODO: Remove verson constraint when upgrading rerun_version to >0.22
+        - re2 {{ re2_version }}
         - spdlog
     test:
       imports:
