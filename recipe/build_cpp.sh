@@ -7,12 +7,6 @@ if [[ "${target_platform}" == osx-* ]]; then
   CXXFLAGS="${CXXFLAGS} -D_LIBCPP_DISABLE_AVAILABILITY"
 fi
 
-if [[ "${CONDA_BUILD_CROSS_COMPILATION:-0}" == "1" || "${target_platform}" == *aarch64 || "${target_platform}" == osx-* ]]; then
-  MOMENTUM_ENABLE_SIMD=OFF
-else
-  MOMENTUM_ENABLE_SIMD=ON
-fi
-
 # Workaround for fx/gltf.h:70:13: error: narrowing conversion of '-1' from 'int' to 'char' [-Wnarrowing]
 if [[ "${target_platform}" == *aarch64 || "${target_platform}" == *ppc64le ]]; then
   CXXFLAGS="${CXXFLAGS} -Wno-narrowing"
@@ -37,7 +31,7 @@ cmake $SRC_DIR \
   -DMOMENTUM_BUILD_EXAMPLES=ON \
   -DMOMENTUM_BUILD_PYMOMENTUM=OFF \
   -DMOMENTUM_BUILD_TESTING=ON \
-  -DMOMENTUM_ENABLE_SIMD=$MOMENTUM_ENABLE_SIMD \
+  -DMOMENTUM_ENABLE_SIMD=OFF \
   -DMOMENTUM_INSTALL_EXAMPLES=ON \
   -DMOMENTUM_USE_SYSTEM_GOOGLETEST=$MOMENTUM_USE_SYSTEM_GOOGLETEST \
   -DMOMENTUM_USE_SYSTEM_PYBIND11=OFF \
