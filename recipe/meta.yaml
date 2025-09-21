@@ -10,6 +10,8 @@ package:
 source:
   - url: https://github.com/facebookresearch/momentum/archive/v{{ version }}.tar.gz
     sha256: 70c5edd6992a1bbaa7654995b95d83943bedf5d66303c3963e10a4691f290b90
+    patches:
+      - patches/0002-Use-ninja-instead-of-visual-studio.patch
 
 build:
   number: 1
