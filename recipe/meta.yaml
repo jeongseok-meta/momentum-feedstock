@@ -173,7 +173,9 @@ outputs:
         - spdlog
     test:
       imports:
+        - pymomentum.backend
         - pymomentum.geometry
+        - pymomentum.gpu_character
         - pymomentum.marker_tracking
         - pymomentum.quaternion
         - pymomentum.skel_state
