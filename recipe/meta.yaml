@@ -14,6 +14,7 @@ source:
 build:
   number: 0
   skip: true  # [py<312]
+  skip: true  # [win]
 
 outputs:
   - name: momentum-cpp
