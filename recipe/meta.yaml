@@ -12,7 +12,7 @@ source:
     sha256: 1854cea315eda3b86d103e20c25c27c345ea7a95cf5798fb36fa26459cbfeb8d
 
 build:
-  number: 0
+  number: 1
   skip: true  # [py<312]
   skip: true  # [win]
 
