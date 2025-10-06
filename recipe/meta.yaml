@@ -12,9 +12,8 @@ source:
     sha256: 3e1edf314bec8a91132e8ae28261d0637f97e407df9fcc48ec8ead37266a1641
 
 build:
-  number: 0
+  number: 1
   skip: true  # [py<312]
-  skip: true  # [win]
 
 outputs:
   - name: momentum-cpp
