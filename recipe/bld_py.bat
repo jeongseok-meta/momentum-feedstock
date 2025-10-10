@@ -1,6 +1,6 @@
 @echo on
 
-nvcc --version
+where nvcc >nul 2>&1 && nvcc --version
 
 set CMAKE_ARGS=%CMAKE_ARGS% ^
     -DMOMENTUM_ENABLE_SIMD=OFF ^
