@@ -46,7 +46,7 @@ re2:
 re2_version:
 - 2024.07.02
 rerun_version:
-- '0.22'
+- '0.23'
 spdlog:
 - '1.15'
 target_platform:
