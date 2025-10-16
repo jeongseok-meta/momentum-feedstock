@@ -55,3 +55,12 @@ rerun_version:
 # TODO: Remove when upgrading rerun_version to >0.22
 re2_version:
   - '2024.07.02'
+
+zip_keys:
+  - - c_compiler_version
+    - cxx_compiler_version
+    - fortran_compiler_version
+    - c_stdlib_version
+    - cuda_compiler_version
+    - pytorch
+    - libtorch
