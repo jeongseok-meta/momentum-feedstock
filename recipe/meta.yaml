@@ -112,8 +112,12 @@ outputs:
         - {{ stdlib('c') }}
         {% if cuda_compiler_version != "None" %}
         - {{ compiler('cuda') }}
+        {% if cuda_compiler_version == "11.8" %}
+        - cudatoolkit {{ cuda_compiler_version }}.*
+        {% else %}
         - cuda-toolkit
         - nvtx-c
+        {% endif %}
         {% endif %}
         - cmake
         - cross-python_{{ target_platform }}     # [build_platform != target_platform]
@@ -130,9 +134,13 @@ outputs:
       host:
         # GPU requirements
         {% if cuda_compiler_version != "None" %}
+        {% if cuda_compiler_version == "11.8" %}
+        - cudatoolkit {{ cuda_compiler_version }}.*
+        {% else %}
         - cuda-version {{ cuda_compiler_version }}
         - cuda-toolkit
         - nvtx-c
+        {% endif %}
         {% endif %}
         # other requirements
         - ceres-solver
