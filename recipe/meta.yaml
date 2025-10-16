@@ -12,7 +12,7 @@ source:
     sha256: c3f81140ba97d156e7d90437a08e51057d7cd59608b469a397c790fa70f1ddf5
 
 build:
-  number: 1
+  number: 2
   skip: true  # [py<312]
 
 outputs:
