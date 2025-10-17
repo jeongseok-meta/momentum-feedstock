@@ -49,13 +49,6 @@ libtorch:                      # [linux or win]
   - '2.8'                      # [linux or win]
   - '2.8'                      # [linux or win]
 
-# Use legacy cudatoolkit for CUDA 11.8
-cuda_compiler:                 # [linux or win]
-  - None                       # [linux or win]
-  - nvcc                       # [linux or win]
-  - cuda-nvcc                  # [linux or win]
-  - cuda-nvcc                  # [linux or win]
-
 rerun_version:
   - '0.23'
 
