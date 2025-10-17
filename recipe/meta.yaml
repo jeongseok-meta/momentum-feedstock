@@ -110,13 +110,11 @@ outputs:
       build:
         - {{ compiler('cxx') }}
         - {{ stdlib('c') }}
-        {% if cuda_compiler_version != "None" %}
-        - {{ compiler('cuda') }}
-        {% endif %}
         {% if cuda_compiler_version == "11.8" %}
         - cudatoolkit {{ cuda_compiler_version }}.*
         {% endif %}
         {% if cuda_compiler_version != "None" and cuda_compiler_version != "11.8" %}
+        - {{ compiler('cuda') }}
         - cuda-toolkit
         - nvtx-c
         {% endif %}
