@@ -3,7 +3,7 @@ schema_version: 1
 context:
   name: momentum
   version: "0.1.110"
-  build_number: 2
+  build_number: 3
 
 recipe:
   name: ${{ name|lower }}-split
@@ -218,10 +218,11 @@ outputs:
         - pytest
         - python
         - if: cuda_compiler_version == "None"
-          then: pytorch * cpu*
+          then:
+            - pytorch * cpu*
+            - if: unix
+              then: libtorch * cpu* # Provides torch/torch.h C++ headers
           else: pytorch
-        - if: unix and cuda_compiler_version == "None"
-          then: libtorch * cpu*  # Provides torch/torch.h C++ headers
         - if: unix and cuda_compiler_version != "None"
           then: libtorch  # Provides torch/torch.h C++ headers
         - re2
