@@ -1,12 +1,9 @@
 azure:
   free_disk_space: true
-  settings_win:
-    variables:
-      CONDA_BLD_PATH: C:\\bld\\
-      MINIFORGE_HOME: C:\Miniforge
 bot:
   automerge: true
 build_platform:
+  linux_aarch64: linux_64
   osx_arm64: osx_64
 conda_build:
   error_overlinking: true
@@ -16,4 +13,15 @@ conda_install_tool: pixi
 github:
   branch_name: main
   tooling_branch_name: main
+provider:
+  linux_aarch64: default
 test: native_and_emulated
+workflow_settings:
+  build_workspace_dir:
+    - provider: azure
+      os: win
+      value: C:\\bld\\
+  tools_install_dir:
+    - provider: azure
+      os: win
+      value: C:\Miniforge
