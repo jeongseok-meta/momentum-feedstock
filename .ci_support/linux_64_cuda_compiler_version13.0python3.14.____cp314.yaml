@@ -27,7 +27,7 @@ libboost_devel:
 librerun_sdk:
 - 0.32.2
 libtorch:
-- '2.11'
+- '2.12'
 numpy:
 - '2'
 pin_run_as_build:
@@ -37,7 +37,7 @@ pin_run_as_build:
 python:
 - 3.14.* *_cp314
 pytorch:
-- '2.11'
+- '2.12'
 re2:
 - 2025.11.05
 spdlog:
