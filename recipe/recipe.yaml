@@ -12,8 +12,6 @@ recipe:
 source:
   - url: https://github.com/facebookresearch/momentum/archive/v${{ version }}.tar.gz
     sha256: d4fb4b47ea6e19d048c211fdb03e398a01c16e0fa9bf7c5b774b3216992cdb82
-    patches:
-      - patches/0003-Use-packaged-mdspan.patch
 
 build:
   number: ${{ build_number }}
@@ -48,8 +46,8 @@ outputs:
         - cli11
         - dispenso
         - drjit-cpp * cpu*
-        # Momentum requests Eigen3 3.4.0; Eigen 5's CMake config is not compatible.
-        - eigen >=3.4,<4
+        # Momentum 0.1.111 requires Eigen 5.0.x.
+        - eigen >=5.0,<5.1
         - ezc3d
         - fmt
         - fx-gltf
@@ -73,8 +71,8 @@ outputs:
         - cli11
         - dispenso
         - drjit-cpp * cpu*
-        # The installed CMake config calls find_dependency(Eigen3 3.4.0 CONFIG).
-        - eigen >=3.4,<4
+        # The installed CMake config requires Eigen 5.0.x.
+        - eigen >=5.0,<5.1
         - ezc3d
         - fx-gltf
         - indicators
@@ -200,8 +198,8 @@ outputs:
         - if: cuda_compiler_version == "None"
           then: drjit-cpp * cpu*
           else: drjit-cpp
-        # Momentum requests Eigen3 3.4.0; Eigen 5's CMake config is not compatible.
-        - eigen >=3.4,<4
+        # Momentum 0.1.111 requires Eigen 5.0.x.
+        - eigen >=5.0,<5.1
         - ezc3d
         - fmt
         - fx-gltf
