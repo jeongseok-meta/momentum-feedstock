@@ -1,6 +1,9 @@
 @echo on
 setlocal EnableExtensions EnableDelayedExpansion
 
+if not defined MOMENTUM_BUILD_TORCH_EXTENSIONS set MOMENTUM_BUILD_TORCH_EXTENSIONS=ON
+echo MOMENTUM_BUILD_TORCH_EXTENSIONS=%MOMENTUM_BUILD_TORCH_EXTENSIONS%
+
 rem ------------------------------------------------------------------
 rem  Detect CUDA build
 rem  CUDA_COMPILER_VERSION is set by conda-build; "None" means CPU build
@@ -25,7 +28,9 @@ cd /d %SRC_DIR%
 
 if %IS_CUDA_BUILD%==0 (
     echo Using pip install for CPU build...
+    if exist build rmdir /s /q build
     set CMAKE_ARGS=%CMAKE_ARGS% ^
+        -DMOMENTUM_BUILD_TORCH_EXTENSIONS=%MOMENTUM_BUILD_TORCH_EXTENSIONS% ^
         -DMOMENTUM_BUILD_IO_USD=OFF ^
         -DMOMENTUM_BUILD_RENDERER=ON ^
         -DMOMENTUM_BUILD_TESTING=OFF ^
@@ -87,6 +92,7 @@ cmake .. -G Ninja ^
     -DPython3_EXECUTABLE="%PYTHON%" ^
     -DCMAKE_CUDA_HOST_COMPILER="%CMAKE_CUDA_HOST_COMPILER%" ^
     -DMOMENTUM_BUILD_PYMOMENTUM=ON ^
+    -DMOMENTUM_BUILD_TORCH_EXTENSIONS=%MOMENTUM_BUILD_TORCH_EXTENSIONS% ^
     -DMOMENTUM_BUILD_IO_USD=OFF ^
     -DMOMENTUM_BUILD_RENDERER=ON ^
     -DMOMENTUM_BUILD_TESTING=OFF ^
