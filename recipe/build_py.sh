@@ -2,6 +2,8 @@
 
 set -exo pipefail
 
+: "${MOMENTUM_BUILD_TORCH_EXTENSIONS:=ON}"
+
 # Workaround for PyTorch 2.9 CMake config issue on Unix:
 # The pytorch package's TorchConfig.cmake references include directories like
 # "torch/include/torch/csrc/api/include" that don't exist. The libtorch package
@@ -43,6 +45,7 @@ else
 fi
 
 export CMAKE_ARGS="$CMAKE_ARGS \
+    -DMOMENTUM_BUILD_TORCH_EXTENSIONS=$MOMENTUM_BUILD_TORCH_EXTENSIONS \
     -DMOMENTUM_BUILD_RENDERER=$MOMENTUM_BUILD_RENDERER \
     -DMOMENTUM_BUILD_TESTING=OFF \
     -DMOMENTUM_ENABLE_SIMD=OFF \
@@ -64,5 +67,7 @@ elif [[ ! -d "${PREFIX}/include/pxr" ]]; then
   # openusd is not available (check for pxr headers)
   export CMAKE_ARGS="$CMAKE_ARGS -DMOMENTUM_BUILD_IO_USD=OFF"
 fi
+
+rm -rf build
 
 $PYTHON -m pip install . -vv --no-deps --no-build-isolation

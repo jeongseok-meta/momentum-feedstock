@@ -3,7 +3,7 @@ schema_version: 1
 context:
   name: momentum
   version: "0.1.111"
-  build_number: 1
+  build_number: 2
 
 recipe:
   name: ${{ name|lower }}-split
@@ -132,12 +132,136 @@ outputs:
           - urdf_viewer --help
 
   - package:
-      name: pymomentum
+      name: pymomentum-core
+    build:
+      skip:
+        - cuda_compiler_version != "None"
+      string: ${{ "core_py" ~ (python | version_to_buildstring) ~ "_h" ~ hash ~ "_" ~ build_number }}
+      script:
+        file: ${{ "bld_py.bat" if win else "build_py.sh" }}
+        env:
+          MOMENTUM_BUILD_TORCH_EXTENSIONS: "OFF"
+      # Internal DLLs bundled together that reference each other
+      dynamic_linking:
+        missing_dso_allowlist:
+          - if: win
+            then:
+              - "*/momentum_*.dll"
+              - "*/axel.dll"
+    requirements:
+      build:
+        - ${{ compiler("cxx") }}
+        - ${{ stdlib("c") }}
+        - cmake
+        - if: build_platform != target_platform
+          then: cross-python_${{ target_platform }}
+        - gtest
+        - indicators
+        - libboost-devel
+        - make
+        - ninja
+        - pip
+        - pybind11-abi ==11
+        - python
+        - scikit-build-core >=0.11
+      host:
+        - ceres-solver * cpu*
+        - cli11
+        - dispenso
+        - drjit-cpp * cpu*
+        # Momentum 0.1.111 requires Eigen 5.0.x.
+        - eigen >=5.0,<5.1
+        - ezc3d
+        - fmt
+        - fx-gltf
+        - indicators
+        - mdspan >=0.6.1.dev20260223
+        - librerun-sdk
+        - ms-gsl
+        - nlohmann_json
+        - numpy
+        - openfbx
+        - if: linux
+          then: openusd
+        - pip
+        - pytest
+        - pybind11
+        - python
+        - re2
+        - scikit-build-core >=0.11
+        - spdlog
+        - if: not win
+          then: tbb-devel
+        - urdfdom
+        - zlib
+      run:
+        - ezc3d
+        - dispenso
+        - if: win
+          then:
+            - drjit-cpp * cpu*
+            - fmt
+        - gflags
+        - indicators
+        - if: osx
+          then: libabseil
+        - libdeflate
+        - if: win
+          then: librerun-sdk
+        # Direct DSOs used by the Python extensions; host run exports do not
+        # cover all of these in the CUDA build.
+        - if: linux
+          then:
+            - libgcc
+            - libstdcxx
+        - if: linux or win
+          then: libre2-11
+        - numpy
+        - python ${{ python }}
+        - python_abi * *_cp${{ python | version_to_buildstring }}
+        - pytorch >=1.13
+        - scipy >=1.7
+        - spdlog
+        - if: linux
+          then: tbb
+        - urdfdom
+        - if: win
+          then:
+            - ucrt
+            - vc14_runtime
+      run_constraints:
+        - pymomentum <0a0
+        - pymomentum-cpu <0a0
+        - pymomentum-gpu <0a0
+    tests:
+      - requirements:
+          run:
+            - pip
+        script:
+          - pip list
+          - python -c "import pymomentum.axel"
+          - python -c "import pymomentum.backend"
+          - python -c "import pymomentum.geometry"
+          - python -c "import pymomentum.marker_tracking"
+          - python -c "import pymomentum.quaternion"
+          - python -c "import pymomentum.renderer"
+          - python -c "import pymomentum.skel_state"
+          - python -c "import pymomentum.solver2"
+          - python -c "import torch; import pymomentum.torch.character"
+          - python -c "import pymomentum.trs"
+          - python -c "import importlib.util; assert importlib.util.find_spec('pymomentum.diff_geometry') is None"
+          - python -c "import importlib.util; assert importlib.util.find_spec('pymomentum.solver') is None"
+          - pip check
+
+  - package:
+      name: ${{ "pymomentum-gpu" if cuda_compiler_version != "None" else "pymomentum-cpu" }}
     build:
       string: ${{ "cuda" ~ (cuda_compiler_version | replace(".", "")) ~ "_py" ~ (python | version_to_buildstring) ~ "_pt" ~ (pytorch | replace(".", "")) ~ "_h" ~ hash ~ "_" ~ build_number if cuda_compiler_version != "None" else "cpu_py" ~ (python | version_to_buildstring) ~ "_pt" ~ (pytorch | replace(".", "")) ~ "_h" ~
         hash ~ "_" ~ build_number }}
       script:
         file: ${{ "bld_py.bat" if win else "build_py.sh" }}
+        env:
+          MOMENTUM_BUILD_TORCH_EXTENSIONS: "ON"
       # Internal DLLs bundled together that reference each other
       dynamic_linking:
         missing_dso_allowlist:
@@ -214,6 +338,7 @@ outputs:
           then: openusd
         - pip
         - pytest
+        - pybind11
         - python
         - if: cuda_compiler_version == "None"
           then:
@@ -271,6 +396,7 @@ outputs:
         - numpy
         - python ${{ python }}
         - python_abi * *_cp${{ python | version_to_buildstring }}
+        - scipy >=1.7
         - spdlog
         - if: linux
           then: tbb
@@ -279,6 +405,11 @@ outputs:
           then:
             - ucrt
             - vc14_runtime
+      run_constraints:
+        - pymomentum-core <0a0
+        - if: cuda_compiler_version != "None"
+          then: pymomentum-cpu <0a0
+          else: pymomentum-gpu <0a0
     tests:
       - requirements:
           run:
@@ -305,13 +436,15 @@ outputs:
           - pip check
 
   - package:
-      name: ${{ "pymomentum-gpu" if cuda_compiler_version != "None" else "pymomentum-cpu" }}
+      name: pymomentum
     build:
       string: ${{ "cuda" ~ (cuda_compiler_version | replace(".", "")) ~ "_py" ~ (python | version_to_buildstring) ~ "_pt" ~ (pytorch | replace(".", "")) ~ "_h" ~ hash ~ "_" ~ build_number if cuda_compiler_version != "None" else "cpu_py" ~ (python | version_to_buildstring) ~ "_pt" ~ (pytorch | replace(".", "")) ~ "_h" ~
         hash ~ "_" ~ build_number }}
     requirements:
       run:
-        - ${{ pin_subpackage("pymomentum", exact=True) }}
+        - if: cuda_compiler_version != "None"
+          then: ${{ pin_subpackage("pymomentum-gpu", exact=True) }}
+          else: ${{ pin_subpackage("pymomentum-cpu", exact=True) }}
     tests:
       - requirements:
           run:
@@ -329,7 +462,7 @@ outputs:
     requirements:
       run:
         - ${{ pin_subpackage("momentum-cpp", exact=True) }}
-        - ${{ pin_subpackage("pymomentum", exact=True) }}
+        - ${{ pin_subpackage("pymomentum-cpu", exact=True) }}
         - python
       run_exports:
         - ${{ pin_subpackage("momentum-cpp", upper_bound="x.x") }}
