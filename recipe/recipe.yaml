@@ -2,8 +2,8 @@ schema_version: 1
 
 context:
   name: momentum
-  version: "0.1.111"
-  build_number: 2
+  version: "0.1.112"
+  build_number: 0
 
 recipe:
   name: ${{ name|lower }}-split
@@ -11,7 +11,7 @@ recipe:
 
 source:
   - url: https://github.com/facebookresearch/momentum/archive/v${{ version }}.tar.gz
-    sha256: d4fb4b47ea6e19d048c211fdb03e398a01c16e0fa9bf7c5b774b3216992cdb82
+    sha256: eb02853c7df47edaeeea4c0d8eb399d26dc66bfa9f55a9442e065248f2326557
 
 build:
   number: ${{ build_number }}
