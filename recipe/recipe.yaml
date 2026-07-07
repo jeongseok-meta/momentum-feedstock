@@ -12,8 +12,6 @@ recipe:
 source:
   - url: https://github.com/facebookresearch/momentum/archive/v${{ version }}.tar.gz
     sha256: 2d4ca2a01880d0e29906d7ac75479fe594e48a804726bbca08eed0215189c510
-    patches:
-      - patches/0003-Link-drjit-core-only-when-available.patch
 
 build:
   number: ${{ build_number }}
