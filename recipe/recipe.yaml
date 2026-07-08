@@ -2,7 +2,7 @@ schema_version: 1
 
 context:
   name: momentum
-  version: "0.1.112"
+  version: "0.1.113"
   build_number: 0
 
 recipe:
@@ -11,9 +11,7 @@ recipe:
 
 source:
   - url: https://github.com/facebookresearch/momentum/archive/v${{ version }}.tar.gz
-    sha256: eb02853c7df47edaeeea4c0d8eb399d26dc66bfa9f55a9442e065248f2326557
-    patches:
-      - patches/0003-Link-drjit-core-only-when-available.patch
+    sha256: 2d4ca2a01880d0e29906d7ac75479fe594e48a804726bbca08eed0215189c510
 
 build:
   number: ${{ build_number }}
