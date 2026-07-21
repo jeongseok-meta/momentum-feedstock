@@ -180,7 +180,8 @@ if exist "%INIT_FILE%" (
 )
 
 rem Use Python to create the __init__.py with proper DLL loading code
-python -c "import sys; sys.stdout.write('''# Auto-generated DLL loading setup for Windows\nimport sys\nimport os\n\nif sys.platform == 'win32' and hasattr(os, 'add_dll_directory'):\n    _dll_dirs = []\n    # Add package directory to DLL search path\n    _pkg_dir = os.path.dirname(__file__)\n    if _pkg_dir and os.path.isdir(_pkg_dir):\n        _dll_dirs.append(_pkg_dir)\n    # Add conda Library/bin to DLL search path\n    _prefix = os.environ.get('CONDA_PREFIX', '')\n    if not _prefix:\n        # Also check PREFIX (used during conda-build tests)\n        _prefix = os.environ.get('PREFIX', '')\n    if _prefix:\n        _lib_bin = os.path.join(_prefix, 'Library', 'bin')\n        if os.path.isdir(_lib_bin):\n            _dll_dirs.append(_lib_bin)\n        # Also check Library/lib for some DLLs\n        _lib_lib = os.path.join(_prefix, 'Library', 'lib')\n        if os.path.isdir(_lib_lib):\n            _dll_dirs.append(_lib_lib)\n    # Add all collected directories\n    for _d in _dll_dirs:\n        try:\n            os.add_dll_directory(_d)\n        except Exception:\n            pass\n\n''')" > "%INIT_FILE%"
+"%PYTHON%" -c "import sys; sys.stdout.write('''# Auto-generated DLL loading setup for Windows\nimport sys\nimport os\n\nif sys.platform == 'win32' and hasattr(os, 'add_dll_directory'):\n    _dll_dirs = []\n    # Add package directory to DLL search path\n    _pkg_dir = os.path.dirname(__file__)\n    if _pkg_dir and os.path.isdir(_pkg_dir):\n        _dll_dirs.append(_pkg_dir)\n    # Add conda Library/bin to DLL search path\n    _prefix = os.environ.get('CONDA_PREFIX', '')\n    if not _prefix:\n        # Also check PREFIX (used during conda-build tests)\n        _prefix = os.environ.get('PREFIX', '')\n    if _prefix:\n        _lib_bin = os.path.join(_prefix, 'Library', 'bin')\n        if os.path.isdir(_lib_bin):\n            _dll_dirs.append(_lib_bin)\n        # Also check Library/lib for some DLLs\n        _lib_lib = os.path.join(_prefix, 'Library', 'lib')\n        if os.path.isdir(_lib_lib):\n            _dll_dirs.append(_lib_lib)\n    # Add all collected directories\n    for _d in _dll_dirs:\n        try:\n            os.add_dll_directory(_d)\n        except Exception:\n            pass\n\n''')" > "%INIT_FILE%"
+if errorlevel 1 exit /b 1
 
 rem Append original content if backup exists
 if exist "%INIT_BAK%" (
@@ -194,3 +195,4 @@ echo First 25 lines of __init__.py:
 type "%INIT_FILE%" | findstr /N "^" | findstr "^[1-9]: ^1[0-9]: ^2[0-5]:"
 
 echo Build completed successfully!
+exit /b 0
