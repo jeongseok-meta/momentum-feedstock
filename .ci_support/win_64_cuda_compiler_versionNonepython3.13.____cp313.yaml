@@ -15,7 +15,7 @@ fmt:
 libboost_devel:
 - '1.88'
 librerun_sdk:
-- 0.32.2
+- 0.35.0
 numpy:
 - '2'
 pin_run_as_build:
