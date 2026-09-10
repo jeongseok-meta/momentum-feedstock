@@ -158,6 +158,7 @@ echo First 25 lines of __init__.py:
 type "%INIT_FILE%" | findstr /N "^" | findstr "^[1-9]: ^1[0-9]: ^2[0-5]:"
 
 rem Direct CMake installation bypasses Python wheel metadata generation.
+cd /d %SRC_DIR%
 "%PYTHON%" -c "from scikit_build_core.build import prepare_metadata_for_build_wheel; prepare_metadata_for_build_wheel(r'%SP_DIR%')"
 if errorlevel 1 exit 1
 
