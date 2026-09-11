@@ -28,6 +28,8 @@ cd /d %SRC_DIR%
 "%PYTHON%" "%RECIPE_DIR%\prepare_pyproject.py"
 if errorlevel 1 exit 1
 set "CMAKE_GENERATOR=Ninja"
+set "CMAKE_GENERATOR_PLATFORM="
+set "CMAKE_GENERATOR_TOOLSET="
 
 if %IS_CUDA_BUILD%==0 (
     echo Using pip install for CPU build...
