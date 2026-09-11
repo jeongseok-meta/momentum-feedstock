@@ -12,6 +12,8 @@ recipe:
 source:
   - url: https://github.com/facebookresearch/momentum/archive/v${{ version }}.tar.gz
     sha256: e0fda8cd38cee74a4cbb581212e4ff015814c58eba83b21e51a560f3399a476b
+    patches:
+      - patches/0001-undef-windows-near-far.patch
 
 build:
   number: ${{ build_number }}
